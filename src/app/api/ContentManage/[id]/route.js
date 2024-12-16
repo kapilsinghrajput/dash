@@ -1,43 +1,45 @@
-// import { NextResponse } from "next/server";
-// import { PostModel } from "@/lib/models";
-// import { connectToDb } from "@/lib/utils";
-// import { promises as fs } from "fs";
-// import path from "path";
+import { NextResponse } from "next/server";
+import { PostModel } from "@/lib/models";
+import { connectToDb } from "@/lib/utils";
+import { promises as fs } from "fs";
+import path from "path";
+import { v2 as cloudinary } from "cloudinary";
 
-// export async function DELETE(request, { params }) {
-//   const { id } = await params;
 
-//   try {
-//     // Connect to the database
-//     await connectToDb();
+export async function DELETE(request, { params }) {
+  const { id } = await params;
 
-//     // Find the post to delete
-//     const post = await PostModel.findById(id);
+  try {
+    // Connect to the database
+    await connectToDb();
 
-//     if (!post) {
-//       return NextResponse.json({ message: "Post not found" }, { status: 404 });
-//     }
+    // Find the post to delete
+    const post = await PostModel.findById(id);
 
-//     // Delete the associated image file
-//     if (post.imageUrl) {
-//       const imagePath = path.join(process.cwd(), "public", post.imageUrl);
-//       await fs.unlink(imagePath).catch((error) => {
-//         console.warn("Failed to delete image file:", error.message);
-//       });
-//     }
+    if (!post) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    }
 
-//     // Delete the post from the database
-//     await PostModel.findByIdAndDelete(id);
+    // Delete the associated image file
+    if (post.imageUrl) {
+      const imagePath = path.join(process.cwd(), "public", post.imageUrl);
+      await fs.unlink(imagePath).catch((error) => {
+        console.warn("Failed to delete image file:", error.message);
+      });
+    }
 
-//     return NextResponse.json({ message: "Post deleted successfully" });
-//   } catch (error) {
-//     console.error("Error deleting post:", error);
-//     return NextResponse.json(
-//       { message: "Failed to delete post", error },
-//       { status: 500 }
-//     );
-//   }
-// }
+    // Delete the post from the database
+    await PostModel.findByIdAndDelete(id);
+
+    return NextResponse.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return NextResponse.json(
+      { message: "Failed to delete post", error },
+      { status: 500 }
+    );
+  }
+}
 
 // // EDIT API
 // export async function PATCH(request, { params }) {
@@ -101,41 +103,8 @@
 //   }
 // }
 
-// export const GET = async (request, { params }) => {
-//   try {
-//     await connectToDb();
-
-//     const { id } = await params;
-//     const post = await PostModel.findById(id);
-
-//     if (!post) {
-//       return NextResponse.json({ error: "Post not found" }, { status: 404 });
-//     }
-
-//     return NextResponse.json({
-//       message: "post fetched successfully",
-//       data: post,
-//       status: 200,
-//       success: true,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching post by ID:", error);
-//     return NextResponse.json(
-//       { error: error.message || "Internal Server Error" },
-//       { status: 500 }
-//     );
-//   }
-// };
 
 
-
-// cloudinary setped code /////////
-
-
-import { NextResponse } from "next/server";
-import { PostModel } from "@/lib/models";
-import { connectToDb } from "@/lib/utils";
-import { v2 as cloudinary } from "cloudinary";
 
 // Configure Cloudinary
 cloudinary.config({
@@ -206,3 +175,30 @@ export async function PATCH(request, { params }) {
     );
   }
 }
+
+
+export const GET = async (request, { params }) => {
+  try {
+    await connectToDb();
+
+    const { id } = await params;
+    const post = await PostModel.findById(id);
+
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      message: "post fetched successfully",
+      data: post,
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error fetching post by ID:", error);
+    return NextResponse.json(
+      { error: error.message || "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+};
