@@ -10,7 +10,7 @@ export const POST = async (request) => {
 
     // usertype: "",
 
-    const { firstname, lastname, email, password ,rolename} = await request.json();
+    const { firstname, lastname, email, password ,rolename , usertype} = await request.json();
 
     console.log("yyyyyy===", firstname, lastname, email, password ,rolename);
 
@@ -40,6 +40,7 @@ export const POST = async (request) => {
       lastname,
       email,
       password: hashedPassword,
+      usertype,
       rolename,
       role_id:role._id
     });

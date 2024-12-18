@@ -48,7 +48,6 @@ export default function Page() {
   return (
     <div className="container mx-auto p-4">
       <Toaster />
-      <h1 className="text-2xl font-bold mb-4">User Management</h1>
       <div className="flex justify-center mx-auto my-4">
         {userData?.role_id && Roles.includes("content_add") ? (
           <button className="bg-blue-400 px-2 rounded-md text-2xl text-white">

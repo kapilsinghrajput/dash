@@ -104,6 +104,8 @@ export const POST = async (request) => {
     const description = formData.get("description");
     const image = formData.get("image");
 
+    
+
     if (!image) {
       throw new Error("Image is required");
     }
@@ -112,10 +114,12 @@ export const POST = async (request) => {
     const imageBuffer = await image.arrayBuffer();
     const base64Image = Buffer.from(imageBuffer).toString("base64");
 
+
     // Upload the image to Cloudinary
     const uploadResponse = await cloudinary.uploader.upload(`data:${image.type};base64,${base64Image}`, {
       folder: "posts", // Optional: Specify a folder in Cloudinary
     });
+
 
     // Save the post to MongoDB
     await connectToDb();

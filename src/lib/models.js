@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-// import { unique } from "next/dist/build/utils";
 
 const AdminUsers = new mongoose.Schema(
   {
@@ -38,9 +37,14 @@ const AdminUsers = new mongoose.Schema(
       ref: "AdminRoleModel",
       // required: false,
     },
+  
   },
   { timestamps: true }
 );
+
+
+
+
 
 const AdminRole = new mongoose.Schema(
   {

@@ -9,7 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import toast, { Toaster } from "react-hot-toast";
-
 import Link from "next/link";
 import { useUser } from "@/context/UserContext";
 import { useState } from "react";
@@ -25,9 +24,7 @@ const UserManagementComp = ({ datalist }) => {
     });
 
     if (response.ok) {
-      setDataList((prevData) => prevData.filter((user) => user._id !== userId)); // Remove the deleted user
-      // alert('User deleted successfully!');
-      // toast.success('User deleted successfully!');
+      setDataList((prevData) => prevData.filter((user) => user._id !== userId));
     } else {
       const errorData = await response.json();
       alert(`Error: ${errorData.message}`);
@@ -62,7 +59,7 @@ const UserManagementComp = ({ datalist }) => {
 
       {userData?.role_id && Roles.includes("users_add") ? (
         <div className="flex flex-col justify-center items-center">
-          <h1>Create New User</h1>
+          <h1 className=" font-semibold my-4 ">Create New User</h1>
           <Link
             href={"usersManagement/addAdmin"}
             className="bg-blue-500 mt-2 text-white rounded-md px-2 py-1 "
@@ -76,7 +73,6 @@ const UserManagementComp = ({ datalist }) => {
 
       <div className="w-[95%] mx-auto my-4  h-10">
         <Table>
-          {/* <TableCaption>A list of your Admin Users.</TableCaption> */}
           <TableHeader className="pb-4">
             <TableRow>
               <TableHead className="w-[20px]">No.</TableHead>
@@ -96,46 +92,43 @@ const UserManagementComp = ({ datalist }) => {
             </TableRow>
           </TableHeader>
 
-          {DataList.map((e, i) => {
-            return (
-              <TableBody key={i}>
-                <TableRow>
-                  <TableCell className="font-medium">{i + 1}</TableCell>
-                  <TableCell>{`${e.firstname} ${e.lastname}`}</TableCell>
-                  <TableCell>{e.email}</TableCell>
-                  <TableCell>{formatdate(e.createdAt)}</TableCell>
-                  <TableCell>{userRoleType(e.usertype)}</TableCell>
-                  <TableCell>{e.rolename}</TableCell>
+          {DataList.filter((e) => e.usertype !== 0).map((e, i) => (
+            <TableBody key={i}>
+              <TableRow>
+                <TableCell className="font-medium">{i + 1}</TableCell>
+                <TableCell>{`${e.firstname} ${e.lastname}`}</TableCell>
+                <TableCell>{e.email}</TableCell>
+                <TableCell>{formatdate(e.createdAt)}</TableCell>
+                <TableCell>{userRoleType(e.usertype)}</TableCell>
+                <TableCell>{e.rolename}</TableCell>
 
-                  <TableCell className=" flex justify-around ">
-                    {userData?.role_id && Roles.includes("users_edit") ? (
-                      <button className="bg-teal-500 px-2 rounded-sm">
-                        <Link href={`/usersManagement/edit/${e._id}`}>
-                          {" "}
-                          Edit
-                        </Link>
-                      </button>
-                    ) : (
-                      ""
-                    )}
+                <TableCell className=" flex justify-around ">
+                  {userData?.role_id && Roles.includes("users_edit") ? (
+                    <button className="bg-teal-500 px-2 rounded-sm">
+                      <Link href={`/usersManagement/edit/${e._id}`}>
+                        Edit
+                      </Link>
+                    </button>
+                  ) : (
+                    ""
+                  )}
 
-                    {userData?.role_id && Roles.includes("users_delete") ? (
-                      <button
-                        className="bg-teal-500 px-2 rounded-sm"
-                        onClick={() => {
-                          deleteUser(e._id);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            );
-          })}
+                  {userData?.role_id && Roles.includes("users_delete") ? (
+                    <button
+                      className="bg-teal-500 px-2 rounded-sm"
+                      onClick={() => {
+                        deleteUser(e._id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ))}
         </Table>
       </div>
     </div>

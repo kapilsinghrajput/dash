@@ -43,7 +43,7 @@ export default function ListRole() {
     <div className="w-full">
       {userData?.role_id && Roles.includes("role_add") ? (
         <div className="flex flex-col justify-center items-center mb-10">
-          <h1>Create New Role</h1>
+          <h1 className=" font-bold my-2 " >Create New Role</h1>
           <Link
             href={"listRole/addRole"}
             className="bg-blue-500 mt-2 text-white rounded-md px-2 py-1"
