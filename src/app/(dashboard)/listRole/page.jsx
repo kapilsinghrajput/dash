@@ -85,7 +85,7 @@ export default function ListRole() {
 
       <div className="flex justify-end space-x-2">
         {userData?.role_id && Roles.includes("role_edit") && (
-          <button className="bg-teal-500 px-2 rounded-sm text-white">
+          <button className="bg-teal-500 px-2 rounded-sm ">
             <Link href={`/listRole/edit/${e._id}`}>Edit</Link>
           </button>
         )}

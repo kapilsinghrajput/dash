@@ -12,9 +12,7 @@ export default function authpage() {
               "url('https://img.freepik.com/free-vector/gradient-style-abstract-wireframe-background_23-2148993321.jpg?t=st=1732713791~exp=1732717391~hmac=9bc24bc17da53fe874995eaa69d35decf0546806b1a877f6370b9d7d6dec217d&w=826')",
           }}
         >
-          <h2 className='text-center mt-5 text-white  text-3xl font-bold z-["900"] '>
-            Please Login Form
-          </h2>
+    
  <Authtabs/>
         </div>
     </div>
