@@ -21,7 +21,7 @@ const Custom404 = () => {
                 <h3 className="text-3xl font-bold">Look like you're lost</h3>
                 <p className="mt-4">The page you are looking for is not available!</p>
                 <a
-                  href="/"
+                  href="/admin"
                   className="mt-6 inline-block bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition"
                 >
                   Go to Home
