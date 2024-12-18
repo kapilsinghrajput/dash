@@ -5,14 +5,8 @@ import bcryptjs from "bcryptjs";
 
 export const POST = async (request) => {
   try {
-    // Parse the request JSON
-
-
-    // usertype: "",
-
-    const { firstname, lastname, email, password ,rolename , usertype} = await request.json();
-
-    console.log("yyyyyy===", firstname, lastname, email, password ,rolename);
+    const { firstname, lastname, email, password, rolename, usertype } =
+      await request.json();
 
     // Connect to the database
     await connectToDb();
@@ -27,7 +21,7 @@ export const POST = async (request) => {
       );
     }
 
-    // gen role id 
+    // gen role id
     const role = await AdminRoleModel.findOne({ rolename });
 
     // Generate a salt and hash the password
@@ -42,7 +36,7 @@ export const POST = async (request) => {
       password: hashedPassword,
       usertype,
       rolename,
-      role_id:role._id
+      role_id: role._id,
     });
 
     // Save the user to the database
@@ -82,6 +76,3 @@ export const GET = async (request) => {
     console.log(error);
   }
 };
-
-
-
